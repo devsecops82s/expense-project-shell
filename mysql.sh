@@ -8,12 +8,12 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-LOGS_FOLDER="/var/log/shell-script-logs"    # create dir in linux server --$ mkdir shell-script-logs--
+LOGS_FOLDER="/var/log/expense-logs"    # create dir in linux server --$ mkdir shell-script-logs--
 
 # only log file name logs
 LOG_FILE=$(echo $0 | cut -d "," -f1)
 TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
-LOG_FILE_NAME="$LOG_FOLDERS/$LOG_FILE-$TIMESTAMP.log"
+LOG_FILE_NAME="$LOG_FOLDER/$LOG_FILE-$TIMESTAMP.log"
 
 VALIDATE(){
     dnf install mysql -y
@@ -49,8 +49,15 @@ VALIDATE $? "Enabling MySQL Server"
 systemctl start mysqld &>>$LOG_FILE_NAME
 VALIDATE $? "starting MySQL Server"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE_NAME
-VALIDATE $? "Setting Root Password"
+mysql -h mysql.bsdaws82s.site -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE_NAME
+
+if [ $? -ne 0 ]
+then
+    echo "MySQL Root password not setup" &>>$LOG_FILE_NAME
+    mysql_secure_installation --set-root-pass ExpenseApp@1
+    VALIDATE $? "Setting Root Password"
+else
+    echo -e "MySQL Root password already setup ... $Y SKIPPING $N"
 
 
 
