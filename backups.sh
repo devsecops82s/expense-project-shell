@@ -38,6 +38,9 @@ then
     USAGE
 fi
 
+echo " Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
+
+
 # if [ ! -d SOURCE_DIR ]
 # then
 #     echo -e "$SOURCE_DIR Does not exist...please check"
@@ -50,7 +53,7 @@ fi
 #     exit 1
 # fi
 
-echo " Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
+# echo " Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
 
 # FILES=$(find $SOURCE_DIR -name "*.log" -mtime +$DAYS)
 
