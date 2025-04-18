@@ -31,39 +31,36 @@ USAGE(){
     exit 1
 }
 
-mkdir -p /home/ec2-user/shellscript-logs/
+mkdir -p /home/ec2-user/shellscript-logs
 
 if [ $# -lt 2 ]
 then
     USAGE
 fi
 
+if [ ! -d SOURCE_DIR ]
+then
+    echo -e "$SOURCE_DIR Does not exist...please check"
+    exit 1
+fi
+
+fi [ ! -d DEST_DIR ]
+then
+    echo -e "$DEST_DIR Does not exist...please chek"
+    exit 1
+fi
+
 echo " Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
 
-
-# if [ ! -d SOURCE_DIR ]
-# then
-#     echo -e "$SOURCE_DIR Does not exist...please check"
-#     exit 1
-# fi
-
-# fi [ ! -d DEST_DIR ]
-# then
-#     echo -e "$DEST_DIR Does not exist...please chek"
-#     exit 1
-# fi
-
-# echo " Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
-
-# FILES=$(find $SOURCE_DIR -name "*.log" -mtime +$DAYS)
+FILES=$(find $SOURCE_DIR -name "*.log" -mtime +$DAYS)
 
 
-# if [ -n "$FILES" ]
-# then
-#     echo "Files are: $FILES"
-# else
-#     echo "no files found older than $DAYS"
-# fi
+if [ -n "$FILES" ]
+then
+    echo "Files are: $FILES"
+else
+    echo "no files found older than $DAYS"
+fi
 
 
 
